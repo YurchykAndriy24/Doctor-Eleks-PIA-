@@ -1,0 +1,50 @@
+1.	Выбрать все документы, где встречается товар с производителем: ORAL-B (табл. Producers) и в названии товара присутствует текст: «зуб.»
+
+Select g.Id
+, g.Name
+, g.ProducerID
+, p.Name
+, p.ID
+From Goods g Inner Join Producers p on g.ProducerID = p.ID
+Where p.Name = 'Oral-B'
+And g.NAme like “зуб.%” ;
+
+2.Выбрать все чеки за период с 01.01.2011 и 31.01.2013
+
+Select * 
+From Doctitles 
+Where DOCDATE Between '2011-01-01' and '2013-01-31' ;
+
+
+3.	Выбрать все приходные документы, полученные от фирмы Альба (табл. Firms)
+
+Select f.Id
+, f.name
+, d.Firmid
+, d.ID
+, d.TypeID
+, d.Docdate
+, d.NO
+From Doctitles d inner join Firms f on d.Firmid = f.ID
+where f.Name = 'Альба' ;
+
+4.	Найти все строки из расходной накладной с номером №100345 и ценами ниже 100 грн. 
+
+Select dt.ID
+, dt.TypeID
+, dc.ID
+, dc.DOCID
+, dc.GOODSID
+, dc.PRICE
+, dt.NO
+From Doctitles dt inner join Doccontents dc on dt.DOCID = dc.ID
+Where dt.Typeid = 2
+And dt.NO = 100345
+And dc.Price < 100 ;
+
+5.Заменить названия всем производителям товарам, у которых указана страна «Украина» на «старое название + страна производитель». 
+	пример: «Альба Украина», если раньше название было «Альба»
+
+update Producers
+set "Name"="Name"||' Украина'
+where Country = ‘Украина’ ;
